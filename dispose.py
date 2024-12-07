@@ -14,8 +14,9 @@ class Dispose(Element):
 
     def in_act(self, next_client):
         if next_client.get_t_start() is not None:
-            self.delta_t_service += self.t_curr - next_client.get_t_start()
-            self.total_distance_from += next_client.get_distance_from()
+            if self.t_curr > self.transition_period:
+                self.delta_t_service += self.t_curr - next_client.get_t_start()
+                self.total_distance_from += next_client.get_distance_from()
 
             # self.count_cals += next_client.get_attempt_num()
             # if next_client.get_attempt_num() >= self.max_c:

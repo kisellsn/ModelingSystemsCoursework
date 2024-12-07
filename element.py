@@ -38,6 +38,8 @@ class Element:
 
         self.next_client = Client(None)
 
+        self.transition_period = 0
+
     def choose_next_element(self):
         if self.probability != [1] and self.priority != [1]:
             raise Exception('Вибір маршруту неоднозначний: ймовірність і пріоритет задаються одночасно')
@@ -109,7 +111,8 @@ class Element:
         return self.name
 
     def out_act(self):  # вихід з елементу
-        self.quantity += 1
+        if self.t_curr >= self.transition_period:
+            self.quantity += 1
 
     def result(self):
         print(f'{self.name} quantity = {str(self.quantity)} state = {self.state}')
@@ -145,3 +148,6 @@ class Element:
             if self.t_next[i] == self.t_curr:
                 current_channels.append(i)
         return current_channels
+
+    def set_transition_period(self, t):
+        self.transition_period = t

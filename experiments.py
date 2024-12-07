@@ -2,14 +2,18 @@ from create import Create
 from dispose import Dispose
 from process import Process
 from model import Model
+import numpy as np
+import scipy.stats
+
 
 NUM_RUNS = 20
 def find_optimal_model():
     TOTAL_WORKERS = 15
     results = []
     tmod = 5440
+    transition_period = 4000
 
-    for operators in range(1, TOTAL_WORKERS):  # Перебір від 1 до 14 операторів
+    for operators in range(1, TOTAL_WORKERS-10):  # Перебір від 1 до 5 операторів
         taxis = TOTAL_WORKERS - operators  # Водії таксі = загальна кількість - оператори
         print(f"Simulating with {operators} operators and {taxis} taxis...")
 
@@ -33,12 +37,12 @@ def find_optimal_model():
 
             # Запуск моделі
             elements = [creator, dialing_processor, call_process, taxi_dispatch, d1]
-            model = Model(elements, transition_period=4000)
+            model = Model(elements, transition_period=transition_period)
             model.simulate(tmod)  # 1 день роботи (1440 хв)
 
             # Результати прогону
             total_revenue = 20 * d1.quantity + 3 * d1.total_distance_from
-            total_expenses = TOTAL_WORKERS * 1000 * tmod / 1440
+            total_expenses = TOTAL_WORKERS * 1000 * (tmod - transition_period) / 1440
 
             net_profit = total_revenue - total_expenses
             avg_time_service = d1.delta_t_service / d1.quantity if d1.quantity > 0 else float('inf')
@@ -93,12 +97,6 @@ def create_model(drivers=10, max_queue=10, transition_period=None):
     elements = [creator, dialing_processor, call_process, taxi_dispatch, d1]
     model = Model(elements, transition_period)
     return model
-
-
-import numpy as np
-
-
-import scipy.stats
 
 
 

@@ -7,6 +7,7 @@ from client import Client
 class Create(e.Element):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.arrived_before_transition_time = 0
 
     def out_act(self):
         super().out_act()
@@ -16,4 +17,6 @@ class Create(e.Element):
         self.next_client = Client(next_distance)
 
         next_element = self.choose_next_element()
+        if self.t_curr < self.transition_period:
+            self.arrived_before_transition_time += 1
         next_element.in_act(self.next_client)

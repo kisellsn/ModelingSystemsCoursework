@@ -20,7 +20,8 @@ class Process(e.Element):
             self.next_client.set_t_start(self.t_curr)
 
         if self.name == 'Operators' and self.next_client.get_attempt_num() > self.next_client.max_attempts:
-            self.failure += 1
+            if self.t_curr > self.transition_period:
+                self.failure += 1
             return
 
         if self.name == "Dialing":
@@ -43,7 +44,8 @@ class Process(e.Element):
                     retry_processor = self.next_element[1]
                     retry_processor.in_act(self.next_client)
                 else:
-                    self.failure += 1
+                    if self.t_curr > self.transition_period:
+                        self.failure += 1
 
     def out_act(self):
         current_channel = self.get_current_channel()
