@@ -62,17 +62,23 @@ def find_optimal_model():
             'avg_time_service': avg_avg_time_service,
         })
 
+    for result in results:
+        print(f"Operators: {result['operators']}, Taxis: {result['taxis']}")
+        print(f"  Average Net Profit: {result['net_profit']:.2f} UAH")
+        print(f"  Average Service Time: {result['avg_time_service']:.2f} minutes")
+
     # Аналіз результатів
     optimal_time = min(results, key=lambda x: x['avg_time_service'])
     optimal_profit = max(results, key=lambda x: x['net_profit'])
+
+    print("\nOptimal configuration to maximize net profit:")
+    print(f"  Operators: {optimal_profit['operators']}, Taxis: {optimal_profit['taxis']}")
+    print(f"  Net Profit: {optimal_profit['net_profit']:.2f} UAH")
 
     print("\nOptimal configuration to minimize service time:")
     print(f"  Operators: {optimal_time['operators']}, Taxis: {optimal_time['taxis']}")
     print(f"  Average Service Time: {optimal_time['avg_time_service']:.2f} minutes")
 
-    print("\nOptimal configuration to maximize net profit:")
-    print(f"  Operators: {optimal_profit['operators']}, Taxis: {optimal_profit['taxis']}")
-    print(f"  Net Profit: {optimal_profit['net_profit']:.2f} UAH")
 
 
 def create_model(drivers=10, max_queue=10, transition_period=None):
@@ -196,5 +202,5 @@ def experimental_research():
 
 
 if __name__ == "__main__":
-    experimental_research()
-    # find_optimal_model()
+    # experimental_research()
+    find_optimal_model()
