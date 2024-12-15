@@ -12,7 +12,7 @@ SPEED_MAX = 40
 class Element:
     nextId = 0
 
-    def __init__(self, name=None, delay_mean=1., delay_dev=0., distribution='', probability=1, n_channel=1,
+    def __init__(self, name=None, delay_mean=1., delay_dev=0., distribution='', n_channel=1,
                  max_queue=float('inf')):
         self.t_next = [0] * n_channel  # момент часу наступної події
         self.delay_mean = delay_mean  # середнє значення часової затримки
@@ -26,7 +26,6 @@ class Element:
         self.name = f'Element_{self.id_el}' if name is None else name
         self.distribution = distribution
 
-        self.probability = [probability]
         self.priority = [1]
         self.queue = 0
         self.max_observed_queue = 0
@@ -41,15 +40,10 @@ class Element:
         self.transition_period = 0
 
     def choose_next_element(self):
-        if self.probability != [1] and self.priority != [1]:
-            raise Exception('Вибір маршруту неоднозначний: ймовірність і пріоритет задаються одночасно')
-        elif self.probability != [1]:
-            next_element = np.random.choice(a=self.next_element, p=self.probability)
-            return next_element
-        elif self.priority != [1]:
+        if self.priority != [1]:
             next_element = self.choose_by_priority()
             return next_element
-        elif self.probability == [1] and self.priority == [1]:
+        elif self.priority == [1]:
             return self.next_element[0]
 
     def choose_by_priority(self):
