@@ -36,7 +36,7 @@ class Element:
         self.mean_load = 0
         self.failure = 0
 
-        self.next_client = Client(None)
+        self.next_client = Client()
 
         self.transition_period = 0
 
@@ -68,6 +68,9 @@ class Element:
 
     def get_delay(self):
         if self.name == 'Taxis':
+            distance_to = np.random.choice([5, 8, 9, 11, 12, 20], p=[0.1, 0.2, 0.25, 0.17, 0.23, 0.05])
+            self.next_client.set_distance_to(distance_to)
+
             speed = FunRand.uniform(SPEED_MIN, SPEED_MAX) / 60  # у км/хв
             service_time = FunRand.uniform(self.delay_mean - self.delay_dev,
                                            self.delay_mean + self.delay_dev)

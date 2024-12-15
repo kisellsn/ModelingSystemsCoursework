@@ -1,12 +1,12 @@
 
 class Client:
-    def __init__(self, distance_to):
+    def __init__(self):
         self.max_attempts = 4
         self.dialing_time = 0.5
         self.waiting_time = 1
 
         self.attempt_num = 0
-        self.distance_to = distance_to  # distance from taxi to client
+        self.distance_to = None  # distance from taxi to client
         self.distance_from = None  # distance from client to endpoint
         self.t_start = None
 
@@ -14,6 +14,9 @@ class Client:
 
     def set_distance_from(self, distance_from):
         self.distance_from = distance_from
+
+    def set_distance_to(self, distance_to):
+        self.distance_to = distance_to
 
     def set_t_start(self, t_start):
         self.t_start = t_start

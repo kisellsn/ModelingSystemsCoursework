@@ -10,7 +10,7 @@ class Process(e.Element):
         self.t_next = [np.inf] * self.channel
         self.state = [0] * self.channel
 
-        self.clients = [Client(None)] * self.channel  # клієнти для кожного робітника
+        self.clients = [Client()] * self.channel  # клієнти для кожного робітника
         self.clients_queue = []  # масив клієнтів в черзі
 
     def in_act(self, client):
@@ -55,7 +55,7 @@ class Process(e.Element):
             self.state[i] = 0
 
             prev_client = self.clients[i]
-            self.clients[i] = Client(None)
+            self.clients[i] = Client()
 
             if self.queue > 0:
                 self.queue -= 1
