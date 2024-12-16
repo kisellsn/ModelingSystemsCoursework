@@ -60,6 +60,13 @@ class Element:
                 elif self.next_client.get_attempt_num() < self.next_client.max_attempts:
                     return self.next_element[max_pr_index]
 
+            elif self.name == 'Dialing':
+                if (not self.next_element[min_pr_index].get_free_channels() and
+                        self.next_client.get_attempt_num() < self.next_client.max_attempts):
+                    return self.next_element[max_pr_index]
+                else:
+                    return self.next_element[min_pr_index]
+
     def get_delay(self):
         if self.name == 'Taxis':
             distance_to = np.random.choice([5, 8, 9, 11, 12, 20], p=[0.1, 0.2, 0.25, 0.17, 0.23, 0.05])

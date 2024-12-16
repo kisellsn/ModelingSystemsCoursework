@@ -5,13 +5,14 @@ from model import Model
 
 NUM_ITER = 20
 TRANSITION_PERIOD = 4000
+TMOD = 5440
 
 
 import numpy as np
 
 if __name__ == '__main__':
-    OPERATORS = 2 
-    TAXIS = 18
+    OPERATORS = 1
+    TAXIS = 14
     NUM_ITER = 20  # Кількість прогонів
 
     # Ініціалізація для зберігання результатів
@@ -34,14 +35,15 @@ if __name__ == '__main__':
         d1 = Dispose(name='EXIT1')
 
         creator.next_element = [dialing_processor]
-        dialing_processor.next_element = [call_process]
+        dialing_processor.next_element = [call_process, dialing_processor]
+        dialing_processor.priority = [2, 1]
         call_process.next_element = [taxi_dispatch, dialing_processor]
         call_process.priority = [2, 1]
         taxi_dispatch.next_element = [d1]
 
         elements = [creator, dialing_processor, call_process, taxi_dispatch, d1]
-        model = Model(elements, transition_period=4000)
-        model.simulate(5440)  # 1 день роботи
+        model = Model(elements, transition_period=TRANSITION_PERIOD)
+        model.simulate(TMOD)  # 1 день роботи
         result = model.print_result()
 
         # Агрегація результатів
