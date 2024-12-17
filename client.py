@@ -10,8 +10,6 @@ class Client:
         self.distance_from = None  # distance from client to endpoint
         self.t_start = None
 
-        # self.t_end = []  # for verification (delay dialing)
-
     def set_distance_from(self, distance_from):
         self.distance_from = distance_from
 

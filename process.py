@@ -39,11 +39,6 @@ class Process(e.Element):
                 self.queue += 1
                 self.clients_queue.append(self.next_client)
             else:
-                # # Якщо є можливість повторного виклику
-                # if self.name == 'Operators' and self.next_client.get_attempt_num() < self.next_client.max_attempts:
-                #     retry_processor = self.next_element[1]
-                #     retry_processor.in_act(self.next_client)
-                # else:
                 if self.t_curr > self.transition_period:
                     self.failure += 1
 

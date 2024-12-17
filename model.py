@@ -29,10 +29,6 @@ class Model:
                 if t_next_val < self.t_next:
                     self.t_next = t_next_val
                     self.event = e.id_el
-            # try:
-            #     print(f'\nIt\'s time for event in {self.list[self.event].get_name()}, time ={self.t_next}\n')
-            # except IndexError:
-            #     pass
 
             for e in self.list:
                 if self.t_curr >= self.transition_period:
@@ -141,7 +137,6 @@ class Model:
                     global_mean_time_service_accumulator += e.delta_t_service
                     total_distance = e.total_distance_from
                     num_of_finished += e.quantity
-                    # print(e.count_cals / num_of_finished, e.max_c, num_of_finished)
 
         # Глобальні метрики
         global_mean_queue_length = global_mean_queue_length_accumulator / num_of_processors

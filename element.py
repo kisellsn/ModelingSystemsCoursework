@@ -84,7 +84,6 @@ class Element:
             call_delay = self.next_client.dialing_time
             if self.next_client.get_attempt_num() > 1:
                 call_delay += self.next_client.waiting_time
-            # self.next_client.t_end.append(call_delay)
             return call_delay
         else:
             if 'exp' == self.distribution:
